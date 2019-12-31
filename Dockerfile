@@ -4,10 +4,11 @@ WORKDIR /usr/src/app
 
 EXPOSE 4000
 
-COPY ./package*.json .
-
-COPY . .
+COPY ./package.json .
+COPY ./package-lock.json .
 
 RUN npm install
 
-CMD ["npm", "start"]
+COPY . .
+
+CMD ["npm", "run", "dev"]
