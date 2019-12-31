@@ -1,35 +1,39 @@
 const mongoose = require('mongoose');
-const { subjectSchema } = require('./Subject');
 
-const { Schema } = mongoose;
+const { Schema, SchemaTypes } = mongoose;
 
-const fields = {
-  subject: subjectSchema,
-  professors: [
-    {
-      name: String,
-      lastname: String
-    }
-  ],
-  schedule: [
-    {
-      startDate: String,
-      endDate: String,
-      time: {
-        start: String,
-        end: String
+const groupSchema = new Schema(
+  {
+    subject: {
+      type: SchemaTypes.ObjectId,
+      ref: 'Subject'
+    },
+
+    professors: [
+      {
+        name: String,
+        lastname: String
       }
+    ],
+    schedule: [
+      {
+        startDate: String,
+        endDate: String,
+        time: {
+          start: String,
+          end: String
+        }
+      }
+    ],
+    quota: {
+      taken: Number,
+      free: Number
     }
-  ],
-  quota: {
-    taken: Number,
-    free: Number
+  },
+  {
+    timestamps: true
   }
-};
-
-const groupSchema = new Schema(fields, {
-  timestamps: true
-});
+);
 
 groupSchema.methods.getId = function getId() {
   const doc = this.toObject();

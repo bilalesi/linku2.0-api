@@ -2,16 +2,17 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const fields = {
-  name: String,
-  departmentName: String,
-  code: String,
-  number: String
-};
-
-const subjectSchema = new Schema(fields, {
-  timestamps: true
-});
+const subjectSchema = new Schema(
+  {
+    name: String,
+    departmentName: String,
+    code: String,
+    number: String
+  },
+  {
+    timestamps: true
+  }
+);
 
 subjectSchema.methods.getId = function getId() {
   const doc = this.toObject();
