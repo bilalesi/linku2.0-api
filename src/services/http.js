@@ -38,8 +38,19 @@ async function resultadoDepartamento1({
   }).then(res => res.data);
 }
 
+async function resultadoCodigo1({ mat, datos_periodo, datos_nivel }) {
+  return axios("/resultado_codigo1.php", {
+    method: "POST",
+    data: parseParams({ mat, datos_periodo, datos_nivel }),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  }).then(res => res.data);
+}
+
 module.exports = {
   consultaHorarios,
   resultadoNRC1,
-  resultadoDepartamento1
+  resultadoDepartamento1,
+  resultadoCodigo1
 };
