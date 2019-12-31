@@ -1,9 +1,8 @@
-const server = require('./src/server');
+const config = require('./src/config');
+const app = require('./src/app');
 
-server
-  .listen({
-    port: process.env.PORT || 4000,
-  })
-  .then(({ url }) => {
-    console.log(`🚀 Server ready at ${url}`);
-  });
+const { port } = config.server;
+
+app.listen({ port }, () =>
+  console.log(`🚀 Server ready at http://localhost:${port}`),
+);
