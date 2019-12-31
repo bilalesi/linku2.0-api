@@ -10,6 +10,8 @@ const groupSchema = new Schema(
       unique: true
     },
 
+    group: String,
+
     subject: {
       type: SchemaTypes.ObjectId,
       ref: 'Subject',
@@ -30,7 +32,8 @@ const groupSchema = new Schema(
         time: {
           start: String,
           end: String
-        }
+        },
+        place: String
       }
     ],
 
