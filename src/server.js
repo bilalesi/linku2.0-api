@@ -15,7 +15,6 @@ const typeDefs = gql(
   fs.readFileSync(__dirname.concat('/schema.graphql'), 'utf8'),
 );
 
-
 const customScalarTypes = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -38,7 +37,7 @@ const customScalarTypes = {
 const resolvers = {
   Query,
   Mutation,
-  customScalarTypes,
+  ...customScalarTypes,
 };
 
 const server = new ApolloServer({

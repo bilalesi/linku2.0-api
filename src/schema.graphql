@@ -1,0 +1,45 @@
+scalar Date
+
+type Query {
+  getGroups: [Group!]!
+}
+
+type Mutation {
+  updateDatabase: Boolean!
+}
+
+type Group {
+  subject: Subject
+  professors: [Professor!]!
+  schedule: [Schedule!]!
+  quota: Quota
+}
+
+type Subject {
+  name: String
+  departmentName: String
+  code: String
+  number: String
+}
+
+type Professor {
+  name: String
+  lastname: String
+}
+
+type Schedule {
+  startDate: String
+  endDate: String
+  time: Time
+  place: String
+}
+
+type Time {
+  start: String
+  end: String
+}
+
+type Quota {
+  taken: Float
+  free: Float
+}

@@ -1,1 +1,5 @@
-module.exports = {};
+const getGroups = require('./getGroups');
+
+module.exports = {
+  getGroups,
+};
