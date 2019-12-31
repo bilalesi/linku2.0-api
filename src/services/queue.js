@@ -16,10 +16,11 @@ for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
 }
 
 /**
- *
+ * Get information of the groups of a department
  */
 updateDepartmentGroupsQueue.process(async job => {
   const { name, code } = job.data;
+
   const groups = await getGroupsByDepartment(code);
 
   job.progress(100);
