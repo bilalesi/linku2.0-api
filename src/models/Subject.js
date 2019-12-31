@@ -14,6 +14,9 @@ const subjectSchema = new Schema(
   }
 );
 
+// subjectSchema.index({'$**': 'text'});
+subjectSchema.index({ name: 'text' });
+
 subjectSchema.methods.getId = function getId() {
   const doc = this.toObject();
   // eslint-disable-next-line no-underscore-dangle
