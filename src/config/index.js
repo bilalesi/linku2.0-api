@@ -17,5 +17,5 @@ module.exports = {
     baseURL: process.env.SCRAPER_BASE_URL
   },
 
-  actualPeriod: process.env.ACTUAL_PERIOD || '202010'
+  actualPeriod: process.env.ACTUAL_PERIOD
 };
