@@ -190,11 +190,46 @@ async function getGroupByNRC(
   };
 }
 
-getGroupByNRC("15366").then(console.log);
+/**
+ * Get all the groups by Department.
+ * @param {String} department_code
+ * @param {String} period_code
+ * @param {String} level_code
+ *
+ * @returns {Promise<{ name: String, nrc: String }[]>}
+ */
+async function getGroupsByDepartment(
+  department_code,
+  period_code = PERIODS[0].code,
+  level_code = LEVELS[0].code
+) {
+  const html = await httpService.resultadoDepartamento1({
+    departamento: department_code,
+    datos_nivel: level_code,
+    datos_periodo: period_code
+  });
+
+  const $ = cheerio.load(html);
+
+  return $("#programa > option")
+    .map((i, el) => {
+      el = $(el);
+
+      return {
+        name: el
+          .text()
+          .replace(/ - */g, " ")
+          .trim(),
+        nrc: el.val()
+      };
+    })
+    .get();
+}
 
 module.exports = {
   getAllDepartments,
   getAllLevels,
   getAllPeriods,
-  getGroupByNRC
+  getGroupByNRC,
+  getGroupsByDepartment
 };
