@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const config = require("../config");
+const mongoose = require('mongoose');
+const config = require('../config');
 
 const { database } = config;
 
@@ -7,14 +7,14 @@ const { database } = config;
  * Connect to database
  */
 function connect() {
-  mongoose.connect(database.url, { useNewUrlParser: true }, err => {
+  mongoose.connect(database.url, { useNewUrlParser: true }, (err) => {
     if (err) {
-      console.log("Database connection error:", err);
+      console.log('Database connection error:', err);
     }
   });
 
-  mongoose.connection.on("open", () => {
-    console.log(`Database => ${database.url} \x1b[32m%s\x1b[0m`, "connected");
+  mongoose.connection.on('open', () => {
+    console.log(`Database => ${database.url} \x1b[32m%s\x1b[0m`, 'connected');
   });
 }
 
@@ -27,5 +27,5 @@ function disconnect() {
 
 module.exports = {
   connect,
-  disconnect
+  disconnect,
 };
