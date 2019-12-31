@@ -9,7 +9,7 @@ const { database } = config;
 function connect() {
   mongoose.connect(
     database.url,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
     err => {
       if (err) {
         console.log('Database connection error:', err);

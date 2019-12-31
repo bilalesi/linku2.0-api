@@ -1,6 +1,7 @@
 # Linku 2.0 api
 > GraphQL API to get schedules from Universidad del Norte
 
+
 ## How to run?
 ### Server
 
@@ -15,7 +16,51 @@ Want to file a bug, contribute some code, or improve documentation? Excellent! C
 Information about the status of groups and departments scraping queues
 [Link](https://linku2-api.herokuapp.com/queues)
 
+## Get groups
+`GET` [Playground](https://linku2-api.herokuapp.com/graphql)
+`POST`  https://linku2-api.herokuapp.com/graphql
+* By nrc or subject name
+
+```shell
+  query getGroups(
+    $nrc: String
+    $name: String
+  ) {
+    getGroups(
+      nrc: $nrc
+      name: $name
+    ) {
+    	nrc
+      group
+      subject {
+        name
+        departmentName
+        code
+        number
+      }
+      schedule {
+        startDate
+        endDate
+        time {
+          start
+          end
+        }
+        place
+      }
+      professors {
+        name
+        lastname
+      }
+      quota {
+        taken
+        free
+      }
+    }
+  }
+```
+
 ## Schema
+
 ```shell
   scalar Date
 
