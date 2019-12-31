@@ -37,6 +37,8 @@ const groupSchema = new Schema(
       }
     ],
 
+    place: String,
+
     quota: {
       taken: {
         type: Number,
