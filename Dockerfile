@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 EXPOSE 4000
 
+EXPOSE 4004 
+
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y \

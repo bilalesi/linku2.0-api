@@ -1,5 +1,7 @@
 const Queue = require('bull');
 const { redis } = require('../config');
+const { setQueues } = require('bull-board');
+
 const { getAllDepartments, getGroupsByDepartment } = require('./scraper');
 
 const updateDepartmentGroupsQueue = new Queue(
@@ -8,34 +10,34 @@ const updateDepartmentGroupsQueue = new Queue(
 );
 const getDepartamentsQueue = new Queue('get departments', redis.url);
 
+for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
+  updateDepartmentGroupsQueue.clean(1000, status);
+  getDepartamentsQueue.clean(1000, status);
+}
+
 /**
  *
  */
 updateDepartmentGroupsQueue.process(async job => {
-  try {
-    const { name, code } = job.data;
-    const groups = await getGroupsByDepartment(code);
+  const { name, code } = job.data;
+  const groups = await getGroupsByDepartment(code);
 
-    for (const group of groups) {
-    }
-  } catch (e) {
-    console.error(e);
-  }
+  job.progress(100);
 });
 
 /**
  * Create jobs for every department.
  */
 getDepartamentsQueue.process(2, async job => {
-  try {
-    const departments = await getAllDepartments();
-    for (const department of departments) {
-      updateDepartmentGroupsQueue.add(department);
-    }
-  } catch (e) {
-    console.error(e);
-  }
+  const departments = await getAllDepartments();
+
+  departments.map((department, i) => {
+    updateDepartmentGroupsQueue.add(department);
+    job.progress(((i + 1) / departments.length) * 100);
+  });
 });
+
+setQueues([getDepartamentsQueue, updateDepartmentGroupsQueue]);
 
 module.exports = {
   getDepartamentsQueue,
