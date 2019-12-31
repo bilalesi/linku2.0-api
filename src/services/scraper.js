@@ -8,66 +8,10 @@
 const cheerio = require('cheerio');
 const httpService = require('./http');
 
-/**
- * @typedef {Object} Department
- * @property {String} name
- * @property {String} code
- */
-
-/**
- * @typedef {Object} Period
- * @property {String} name
- * @property {String} code
- */
-
-/**
- * @typedef {Object} Level
- * @property {String} name
- * @property {'PR' | 'PG' | 'EC' | 'EX'} code
- */
-
-/**
- * @typedef {Object} Subject
- * @property {String} name
- * @property {String} departmentName
- * @property {String} code
- * @property {String} number
- */
-
-/**
- * @typedef {Object} Professor
- * @property {String} name
- * @property {String} lastname
- */
-
-/**
- * @typedef {Object} Time
- * @property {String} start
- * @property {String} end
- */
-
-/**
- * @typedef {Object} Schedule
- * @property {String} startDate
- * @property {String} endDate
- * @property {Time} time
- * @property {String} place
- */
-
-/**
- * @typedef {Object} Quota
- * @property {Number} taken
- * @property {Number} free
- */
-
-/**
- * @typedef {Object} Group
- * @property {String} nrc
- * @property {Subject} subject
- * @property {Professor[]} professors
- * @property {Schedule[]} schedule
- * @property {Quota} quota
- */
+/** @typedef {import('../types').Department} Department */
+/** @typedef {import('../types').Period} Period */
+/** @typedef {import('../types').Level} Level */
+/** @typedef {import('../types').Group} Group */
 
 /** @type {Period[]} */
 const PERIODS = [
