@@ -4,17 +4,25 @@ const { Schema, SchemaTypes } = mongoose;
 
 const groupSchema = new Schema(
   {
-    nrc: String,
+    nrc: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
     subject: {
       type: SchemaTypes.ObjectId,
-      ref: 'Subject'
+      ref: 'Subject',
+      require: true
     },
+
     professors: [
       {
         name: String,
         lastname: String
       }
     ],
+
     schedule: [
       {
         startDate: String,
@@ -25,9 +33,16 @@ const groupSchema = new Schema(
         }
       }
     ],
+
     quota: {
-      taken: Number,
-      free: Number
+      taken: {
+        type: Number,
+        default: 0
+      },
+      free: {
+        type: Number,
+        default: 0
+      }
     }
   },
   {

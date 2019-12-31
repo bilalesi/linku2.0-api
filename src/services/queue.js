@@ -16,6 +16,9 @@ for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
   getDepartamentsQueue.clean(100, status);
 }
 
+/**
+ * Get and update information of a group.
+ */
 getGroupQueue.process(async job => {
   const group = job.data;
 
@@ -42,7 +45,7 @@ getGroupQueue.process(async job => {
     },
     {
       ...group,
-      subject: subject._id
+      subject
     },
     {
       upsert: true,
