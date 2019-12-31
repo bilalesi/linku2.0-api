@@ -1,7 +1,7 @@
 const Queue = require('bull');
 const { redis } = require('../config');
 const { setQueues } = require('bull-board');
-const { Group } = require('../models');
+const { Group, Subject } = require('../models');
 
 const { getAllDepartments, getGroupsByDepartment } = require('./scraper');
 
@@ -27,12 +27,30 @@ updateDepartmentGroupsQueue.process(async job => {
 
   job.progress(50);
 
-  await Promise.all(
-    groups.map(async group => {
-      console.log('group', group);
-      return Group.create(group);
-    })
-  );
+  await Promise.all(groups.map(async (group) => {
+    const { code, number } = group.subject;
+    const subject = await Subject.findOneAndUpdate({
+      code,
+      number
+    }, group.subject, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    });
+
+    Object.assign(group, {
+      subject
+    });
+
+    await Group.findOneAndUpdate({
+      nrc: group.nrc,
+    }, group, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    });
+  }));
+
 
   job.progress(100);
 });
