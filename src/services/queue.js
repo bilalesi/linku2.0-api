@@ -9,7 +9,7 @@ const { Group } = require('../models')
 /**
  * Update database 
  */
-updateDatabaseQueue.process(async job => {
+updateDatabaseQueue.process(async (job) => {
   await Promise.all(DEPARTMENTS.map(({ id }) => {
     const groups = await getGroupsByDepartment(id)
 

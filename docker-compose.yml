@@ -11,12 +11,15 @@ services:
       HOSTNAME: 0.0.0.0
       PORT: 4000
       SECRET: E8D94B8BE8AE1
+      SCRAPER_BASE_URL: https://guayacan.uninorte.edu.co/4PL1CACI0N35/registro
       DATABASE_URL: mongodb://linku_user:root_12345@db:27017/linku
+      REDIS_URL: redis://redis:6379
     ports:
       - 4000:4000
       - 9229:9229
     depends_on:
       - db
+      - redis
   db:
     image: mongo
     volumes:
@@ -29,6 +32,15 @@ services:
       MONGO_INITDB_DATABASE: linku
     ports:
       - 27017:27017
+  redis:
+    image: redis
+    entrypoint: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+    restart: always
 
 volumes:
   mongo-data: ~
+  redis-data: ~

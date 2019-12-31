@@ -14,7 +14,7 @@ module.exports = {
   },
 
   scraper: {
-    baseURL: 'https://guayacan.uninorte.edu.co/4PL1CACI0N35/registro'
+    baseURL: process.env.SCRAPER_BASE_URL
   },
 
   actualPeriod: process.env.ACTUAL_PERIOD || '202010'
