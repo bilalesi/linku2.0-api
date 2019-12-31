@@ -23,6 +23,8 @@ app.use(
   })
 );
 
+app.use('/queues', UI);
+
 const Query = require('./resolvers/queries');
 const Mutation = require('./resolvers/mutations');
 
@@ -66,7 +68,5 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app });
-
-app.use('/queues', UI);
 
 module.exports = app;

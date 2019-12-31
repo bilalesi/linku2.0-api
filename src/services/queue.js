@@ -11,9 +11,9 @@ const getDepartamentsQueue = new Queue('get departments', redis.url);
 
 // Clean all the jobs in both queues
 for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
-  getGroupQueue.clean(1000, status);
-  getDepartmentGroupsQueue.clean(1000, status);
-  getDepartamentsQueue.clean(1000, status);
+  getGroupQueue.clean(100, status);
+  getDepartmentGroupsQueue.clean(100, status);
+  getDepartamentsQueue.clean(100, status);
 }
 
 getGroupQueue.process(async job => {
@@ -34,21 +34,24 @@ getGroupQueue.process(async job => {
     }
   );
 
-  Object.assign(group, {
-    subject
-  });
+  job.progress(50);
 
   await Group.findOneAndUpdate(
     {
       nrc: group.nrc
     },
-    group,
+    {
+      ...group,
+      subject: subject._id
+    },
     {
       upsert: true,
       new: true,
       setDefaultsOnInsert: true
     }
   );
+
+  job.progress(100);
 });
 
 /**
@@ -58,14 +61,12 @@ getDepartmentGroupsQueue.process(async job => {
   const { code } = job.data;
   const groups = await getGroupsByDepartment(code);
 
-  job.progress(50);
-
-  for (const group of groups) {
-    getGroupQueue.add(group);
+  groups.map((group, i) => {
+    getGroupQueue.add(group, {
+      attempts: 5
+    });
     job.progress(((i + 1) / groups.length) * 100);
-  }
-
-  job.progress(100);
+  });
 });
 
 /**
