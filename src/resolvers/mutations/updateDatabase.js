@@ -10,13 +10,17 @@ const updateDatabase = async (parent, args, context) => {
 
   getDepartamentsQueue.add({});
 
-  await context.models.Cron.findOneAndUpdate({}, {
-    lastCall: new Date(),
-  }, {
-    upsert: true,
-    new: true,
-    setDefaultsOnInsert: true
-  });
+  await context.models.Cron.findOneAndUpdate(
+    {},
+    {
+      lastCall: new Date()
+    },
+    {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    }
+  );
 
   return true;
 };

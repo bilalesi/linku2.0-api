@@ -9,8 +9,10 @@ const updateDepartmentGroupsQueue = new Queue(
   'update departments groups',
   redis.url
 );
+
 const getDepartamentsQueue = new Queue('get departments', redis.url);
 
+// Clean all the jobs in both queues
 for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
   updateDepartmentGroupsQueue.clean(1000, status);
   getDepartamentsQueue.clean(1000, status);
@@ -19,7 +21,7 @@ for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
 /**
  * Get information of the groups of a department
  */
-updateDepartmentGroupsQueue.process(async (job) => {
+updateDepartmentGroupsQueue.process(async job => {
   const { code } = job.data;
   const groups = await getGroupsByDepartment(code);
 
