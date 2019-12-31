@@ -10,6 +10,8 @@ const groupSchema = new Schema(
       unique: true
     },
 
+    group: String,
+
     subject: {
       type: SchemaTypes.ObjectId,
       ref: 'Subject',
@@ -33,6 +35,8 @@ const groupSchema = new Schema(
         }
       }
     ],
+
+    place: String,
 
     quota: {
       taken: {
