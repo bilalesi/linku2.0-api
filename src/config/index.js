@@ -9,9 +9,13 @@ module.exports = {
     url: process.env.DATABASE_URL
   },
 
-  scraper: {
-    baseURL: "https://guayacan.uninorte.edu.co/4PL1CACI0N35/registro"
+  redis: {
+    url: process.env.REDIS_URL
   },
 
-  actualPeriod: process.env.ACTUAL_PERIOD || "202010"
+  scraper: {
+    baseURL: 'https://guayacan.uninorte.edu.co/4PL1CACI0N35/registro'
+  },
+
+  actualPeriod: process.env.ACTUAL_PERIOD || '202010'
 };

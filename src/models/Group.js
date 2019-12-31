@@ -7,28 +7,32 @@ const fields = {
     name: String,
     departmentName: String,
     code: String,
-    number: String,
+    number: String
   },
-  professors: [{
-    name: String,
-    lastname: String,
-  }],
-  schedule: [{
-    startDate: String,
-    endDate: String,
-    time: {
-      start: String,
-      end: String,
-    },
-  }],
+  professors: [
+    {
+      name: String,
+      lastname: String
+    }
+  ],
+  schedule: [
+    {
+      startDate: String,
+      endDate: String,
+      time: {
+        start: String,
+        end: String
+      }
+    }
+  ],
   quota: {
     taken: Number,
-    free: Number,
-  },
+    free: Number
+  }
 };
 
 const groupSchema = new Schema(fields, {
-  timestamps: true,
+  timestamps: true
 });
 
 groupSchema.methods.getId = function getId() {

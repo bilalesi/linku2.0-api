@@ -7,7 +7,7 @@ const { database } = config;
  * Connect to database
  */
 function connect() {
-  mongoose.connect(database.url, { useNewUrlParser: true }, (err) => {
+  mongoose.connect(database.url, { useNewUrlParser: true }, err => {
     if (err) {
       console.log('Database connection error:', err);
     }
@@ -27,5 +27,5 @@ function disconnect() {
 
 module.exports = {
   connect,
-  disconnect,
+  disconnect
 };

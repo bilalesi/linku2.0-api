@@ -12,7 +12,7 @@ const Query = require('./resolvers/queries');
 const Mutation = require('./resolvers/mutations');
 
 const typeDefs = gql(
-  fs.readFileSync(__dirname.concat('/schema.graphql'), 'utf8'),
+  fs.readFileSync(__dirname.concat('/schema.graphql'), 'utf8')
 );
 
 const customScalarTypes = {
@@ -30,14 +30,14 @@ const customScalarTypes = {
         return parseInt(ast.value, 10);
       }
       return null;
-    },
-  }),
+    }
+  })
 };
 
 const resolvers = {
   Query,
   Mutation,
-  ...customScalarTypes,
+  ...customScalarTypes
 };
 
 const server = new ApolloServer({
@@ -46,9 +46,9 @@ const server = new ApolloServer({
   context: ({ req, res }) => ({
     authToken: req.headers['x-access-token'] || req.headers.authorization,
     models,
-    res,
+    res
   }),
-  playground: true,
+  playground: true
 });
 
 module.exports = server;

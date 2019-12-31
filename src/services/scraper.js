@@ -97,15 +97,15 @@ const DEPARTMENTS = [
   { id: '0010', name: 'Dpto. Tecnologia' },
   { id: '0013', name: 'Dpto. de Economia' },
   { id: '0014', name: 'Dpto. Finanzas y Organizaciones' },
-  { id: '0020', name: 'Dpto. Ing Electrica-Electronica' },
+  { id: '0020', name: 'Dpto. Ing Electrica-Electronica' }
 ];
 
 /** @type {Period[]} */
 const PERIODS = [
   {
     code: '202010',
-    name: 'Primer Semestre 2020',
-  },
+    name: 'Primer Semestre 2020'
+  }
 ];
 
 /** @type {Level[]} */
@@ -113,7 +113,7 @@ const LEVELS = [
   { code: 'PR', name: 'Pregrado' },
   { code: 'PG', name: 'Postgrado' },
   { code: 'EC', name: 'Educación Continua' },
-  { code: 'EX', name: 'Extracurricular' },
+  { code: 'EX', name: 'Extracurricular' }
 ];
 
 /**
@@ -132,7 +132,7 @@ async function getAllDepartments() {
 
       return {
         code: parsedEl.val(),
-        name: parsedEl.text(),
+        name: parsedEl.text()
       };
     })
     .get();
@@ -154,7 +154,7 @@ async function getAllLevels() {
 
       return {
         code: parsedEl.val(),
-        name: parsedEl.text(),
+        name: parsedEl.text()
       };
     })
     .get();
@@ -176,7 +176,7 @@ async function getAllPeriods() {
 
       return {
         code: parsedEl.val(),
-        name: parsedEl.text(),
+        name: parsedEl.text()
       };
     })
     .get();
@@ -193,12 +193,12 @@ async function getAllPeriods() {
 async function getGroupByNRC(
   nrc,
   period = PERIODS[0].code,
-  level = LEVELS[0].code,
+  level = LEVELS[0].code
 ) {
   const html = await httpService.resultadoNRC1({
     nrc,
     datos_nivel: level,
-    datos_periodo: period,
+    datos_periodo: period
   });
 
   const $ = cheerio.load(html);
@@ -223,7 +223,7 @@ async function getGroupByNRC(
     number: subjectInfo[0]
       .split(':')[1]
       .substring(4)
-      .trim(),
+      .trim()
   };
 
   const [professors, [taken, free]] = await Promise.all([
@@ -231,22 +231,22 @@ async function getGroupByNRC(
       .html()
       .match(/>([^<>]|^>)*</gm)
       .slice(1)
-      .map((elem) => {
+      .map(elem => {
         const name = elem.replace(/>\s*|\s*</g, '').split(',');
         return {
           firstname: name[1].trim(),
-          lastname: name[0].trim(),
+          lastname: name[0].trim()
         };
       }),
 
     $('body > div > p:nth-child(4)')
       .text()
       .match(/[0-9]+/g)
-      .map(Number),
+      .map(Number)
   ]);
 
   const schedule = $(
-    '#acreditaciones_resultado > div > div > table > tbody > tr',
+    '#acreditaciones_resultado > div > div > table > tbody > tr'
   )
     .slice(1)
     .map((i, el) => {
@@ -265,9 +265,9 @@ async function getGroupByNRC(
         day,
         time: {
           start,
-          end,
+          end
         },
-        place,
+        place
       };
     })
     .get();
@@ -280,8 +280,8 @@ async function getGroupByNRC(
     schedule,
     quota: {
       free,
-      taken,
-    },
+      taken
+    }
   };
 }
 
@@ -293,8 +293,9 @@ async function getGroupByNRC(
  * @returns {Promise<Group[]>}
  */
 async function getGroupsByNRCs(nrcs) {
-  return (await Promise.all(nrcs.map((nrc) => getGroupByNRC(nrc))))
-    .filter((group) => !!group);
+  return (await Promise.all(nrcs.map(nrc => getGroupByNRC(nrc)))).filter(
+    group => !!group
+  );
 }
 
 /**
@@ -307,12 +308,12 @@ async function getGroupsByNRCs(nrcs) {
 async function getGroupsByDepartment(
   department_code,
   period_code = PERIODS[0].code,
-  level_code = LEVELS[0].code,
+  level_code = LEVELS[0].code
 ) {
   const html = await httpService.resultadoDepartamento1({
     departamento: department_code,
     datos_nivel: level_code,
-    datos_periodo: period_code,
+    datos_periodo: period_code
   });
 
   const $ = cheerio.load(html);
@@ -334,23 +335,26 @@ async function getGroupsByDepartment(
 async function getGroupsBySubjectCode(
   subject_code,
   period_code = PERIODS[0].code,
-  level_code = LEVELS[0].code,
+  level_code = LEVELS[0].code
 ) {
   const html = await httpService.resultadoCodigo1({
     mat: subject_code,
     datos_nivel: level_code,
-    datos_periodo: period_code,
+    datos_periodo: period_code
   });
 
   const $ = cheerio.load(html);
 
   const NRCs = $('body > div')
-    .map((i, el) => $(el)
-      .find('p:nth-child(3)')
-      .text()
-      .replace(/\t+/g, '\t')
-      .split('\t')[2]
-      .slice(5)).get();
+    .map((i, el) =>
+      $(el)
+        .find('p:nth-child(3)')
+        .text()
+        .replace(/\t+/g, '\t')
+        .split('\t')[2]
+        .slice(5)
+    )
+    .get();
   return getGroupsByNRCs(NRCs);
 }
 
@@ -363,5 +367,5 @@ module.exports = {
   getAllPeriods,
   getGroupByNRC,
   getGroupsByDepartment,
-  getGroupsBySubjectCode,
+  getGroupsBySubjectCode
 };
