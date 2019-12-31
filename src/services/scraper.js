@@ -112,11 +112,30 @@ async function getGroupByNRC(
 
   const $ = cheerio.load(html);
 
-  const [subjectInfo, professors, [taken, free]] = await Promise.all([
-    $("body > div > p:nth-child(3)")
-      .text()
-      .split("\t\t"),
+  const subjectInfo = $("body > div > p:nth-child(3)")
+    .text()
+    .split("\t\t");
 
+  if (!$("body > div > p.msg1").text()) {
+    return null;
+  }
+
+  const subject = {
+    name: $("body > div > p.msg1").text(),
+    departmentName: ($("body > div > p:nth-child(2)").text() || "")
+      .replace("Departamento:", "")
+      .trim(),
+    code: subjectInfo[0]
+      .split(":")[1]
+      .substring(0, 4)
+      .trim(),
+    number: subjectInfo[0]
+      .split(":")[1]
+      .substring(4)
+      .trim()
+  };
+
+  const [professors, [taken, free]] = await Promise.all([
     $("body > div > p.msg5")
       .html()
       .match(/>([^<>]|^>)*</gm)
@@ -135,21 +154,6 @@ async function getGroupByNRC(
       .match(/[0-9]+/g)
       .map(Number)
   ]);
-
-  const subject = {
-    name: $("body > div > p.msg1").text(),
-    departmentName: ($("body > div > p:nth-child(2)").text() || "")
-      .replace("Departamento:", "")
-      .trim(),
-    code: subjectInfo[0]
-      .split(":")[1]
-      .substring(0, 4)
-      .trim(),
-    number: subjectInfo[0]
-      .split(":")[1]
-      .substring(4)
-      .trim()
-  };
 
   const schedule = $(
     "#acreditaciones_resultado > div > div > table > tbody > tr"
@@ -179,6 +183,7 @@ async function getGroupByNRC(
     .get();
 
   return {
+    nrc,
     group: subjectInfo[1].split(":")[1].trim(),
     subject,
     professors,
@@ -191,12 +196,24 @@ async function getGroupByNRC(
 }
 
 /**
+ * Get all groups by their NRCs.
+ *
+ * @param {String[]} nrcs
+ *
+ * @returns {Promise<Group[]>}
+ */
+async function getGroupsByNRCs(nrcs) {
+  return (await Promise.all(nrcs.map(nrc => getGroupByNRC(nrc)))).filter(
+    group => !!group
+  );
+}
+
+/**
  * Get all the groups by Department.
  * @param {String} department_code
  * @param {String} period_code
  * @param {String} level_code
  *
- * @returns {Promise<{ name: String, nrc: String }[]>}
  */
 async function getGroupsByDepartment(
   department_code,
@@ -211,19 +228,45 @@ async function getGroupsByDepartment(
 
   const $ = cheerio.load(html);
 
-  return $("#programa > option")
-    .map((i, el) => {
-      el = $(el);
-
-      return {
-        name: el
-          .text()
-          .replace(/ - */g, " ")
-          .trim(),
-        nrc: el.val()
-      };
-    })
+  const NRCs = $("#programa > option")
+    .map((i, el) => $(el).val())
     .get();
+
+  return getGroupsByNRCs(NRCs);
+}
+
+/**
+ * Get all the groups using a subject code.
+ *
+ * @param {String} subject_code
+ * @param {String} period_code
+ * @param {String} level_code
+ */
+async function getGroupsBySubjectCode(
+  subject_code,
+  period_code = PERIODS[0].code,
+  level_code = LEVELS[0].code
+) {
+  const html = await httpService.resultadoCodigo1({
+    mat: subject_code,
+    datos_nivel: level_code,
+    datos_periodo: period_code
+  });
+
+  const $ = cheerio.load(html);
+
+  const NRCs = $("body > div")
+    .map((i, el) =>
+      $(el)
+        .find("p:nth-child(3)")
+        .text()
+        .replace(/\t+/g, "\t")
+        .split("\t")[2]
+        .slice(5)
+    )
+    .get();
+
+  return getGroupsByNRCs(NRCs);
 }
 
 module.exports = {
@@ -231,5 +274,6 @@ module.exports = {
   getAllLevels,
   getAllPeriods,
   getGroupByNRC,
-  getGroupsByDepartment
+  getGroupsByDepartment,
+  getGroupsBySubjectCode
 };
