@@ -1,3 +1,9 @@
+/**
+ * Scrapper Service
+ * @version 1.0.0
+ * @author krthr
+ */
+
 /* eslint-disable camelcase */
 const cheerio = require('cheerio');
 const httpService = require('./http');
@@ -56,49 +62,12 @@ const httpService = require('./http');
 
 /**
  * @typedef {Object} Group
+ * @property {String} nrc
  * @property {Subject} subject
  * @property {Professor[]} professors
  * @property {Schedule[]} schedule
  * @property {Quota} quota
  */
-
-const DEPARTMENTS = [
-  { id: '0047', name: 'Dpto. Arquitectura y Urbanismo' },
-  { id: '0032', name: 'Dpto. Ciencias Basicas Medicas' },
-  { id: '0040', name: 'Dpto. Comunicacion Social' },
-  { id: '0050', name: 'Dpto. Cs Politica y Rel Intern' },
-  { id: '0051', name: 'Dpto. Derecho' },
-  { id: '0049', name: 'Dpto. Diseño' },
-  { id: '0045', name: 'Dpto. Educacion' },
-  { id: '0016', name: 'Dpto. Emprendim y Management' },
-  { id: '0034', name: 'Dpto. Enfermeria' },
-  { id: '0076', name: 'Dpto. Español' },
-  { id: '0017', name: 'Dpto. Finanzas y Contaduria' },
-  { id: '0060', name: 'Dpto. Fisica' },
-  { id: '0048', name: 'Dpto. Historia y Cs. Sociales' },
-  { id: '0046', name: 'Dpto. Humanidades y Filosofia' },
-  { id: '0027', name: 'Dpto. Ing. Civil y Ambiental' },
-  { id: '0021', name: 'Dpto. Ingenieria Basica' },
-  { id: '0026', name: 'Dpto. Ingenieria Industrial' },
-  { id: '0024', name: 'Dpto. Ingenieria Mecanica' },
-  { id: '0029', name: 'Dpto. Ingenieria de Sistemas' },
-  { id: '0044', name: 'Dpto. Lenguas' },
-  { id: '0077', name: 'Dpto. Lenguas Extranjeras' },
-  { id: '0061', name: 'Dpto. Matematicas y estadistic' },
-  { id: '0033', name: 'Dpto. Medicina' },
-  { id: '0015', name: 'Dpto. Mercadeo y Neg. Internac' },
-  { id: '0090', name: 'Dpto. Minors Ingenierias' },
-  { id: '0052', name: 'Dpto. Musica' },
-  { id: '0036', name: 'Dpto. Odontologia' },
-  { id: '0042', name: 'Dpto. Psicologia' },
-  { id: '0062', name: 'Dpto. Quimica y Biologia' },
-  { id: '0041', name: 'Dpto. Relaciones Internac.' },
-  { id: '0035', name: 'Dpto. Salud Publica' },
-  { id: '0010', name: 'Dpto. Tecnologia' },
-  { id: '0013', name: 'Dpto. de Economia' },
-  { id: '0014', name: 'Dpto. Finanzas y Organizaciones' },
-  { id: '0020', name: 'Dpto. Ing Electrica-Electronica' }
-];
 
 /** @type {Period[]} */
 const PERIODS = [
@@ -359,7 +328,6 @@ async function getGroupsBySubjectCode(
 }
 
 module.exports = {
-  DEPARTMENTS,
   LEVELS,
   PERIODS,
   getAllDepartments,

@@ -17,10 +17,11 @@ const { origin } = config.server;
 
 const app = express();
 
-app.use(cors({
-  origin,
-}));
-
+app.use(
+  cors({
+    origin
+  })
+);
 
 const Query = require('./resolvers/queries');
 const Mutation = require('./resolvers/mutations');

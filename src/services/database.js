@@ -23,7 +23,7 @@ function connect() {
 }
 
 /**
- * Disconnect to database
+ * Disconnect from the database
  */
 function disconnect() {
   mongoose.connection.close();
