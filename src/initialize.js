@@ -1,9 +1,9 @@
-const { updateDatabaseQueue } = require('./services/queue');
+const { getDepartamentsQueue } = require('./services/queue');
 
-updateDatabaseQueue.add();
+getDepartamentsQueue.add({});
 
 /**
-updateDatabaseQueue.add(
+getDepartamentsQueue.add(
   {},
   {
     repeat: {
