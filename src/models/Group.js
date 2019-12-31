@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
+const { subjectSchema } = require('./Subject');
 
 const { Schema } = mongoose;
 
 const fields = {
-  subject: {
-    name: String,
-    departmentName: String,
-    code: String,
-    number: String
-  },
+  subject: subjectSchema,
   professors: [
     {
       name: String,

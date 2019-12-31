@@ -10,9 +10,8 @@ const { Group } = require('../models')
  * Update database 
  */
 updateDatabaseQueue.process(async (job) => {
-  await Promise.all(DEPARTMENTS.map(({ id }) => {
+  await Promise.all(DEPARTMENTS.map(async ({ id }) => {
     const groups = await getGroupsByDepartment(id)
-
     // TODO verify if the group is already in the database... in that case, update the information
     return groups.map(group => Group.create(group))
   }));
