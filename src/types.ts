@@ -35,6 +35,7 @@ type Schedule = {
   endDate: String;
   time: Time;
   place: String;
+  day: String;
 };
 
 type Quota = {

@@ -33,9 +33,12 @@ const groupSchema = new Schema(
           start: String,
           end: String
         },
-        place: String
+        place: String,
+        day: String
       }
     ],
+
+    place: String,
 
     quota: {
       taken: {
