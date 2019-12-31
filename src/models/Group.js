@@ -4,11 +4,11 @@ const { Schema, SchemaTypes } = mongoose;
 
 const groupSchema = new Schema(
   {
+    nrc: String,
     subject: {
       type: SchemaTypes.ObjectId,
       ref: 'Subject'
     },
-
     professors: [
       {
         name: String,
