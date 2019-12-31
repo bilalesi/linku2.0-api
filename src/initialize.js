@@ -1,5 +1,8 @@
 const { updateDatabaseQueue } = require('./services/queue');
 
+updateDatabaseQueue.add();
+
+/**
 updateDatabaseQueue.add(
   {},
   {
@@ -8,3 +11,4 @@ updateDatabaseQueue.add(
     }
   }
 );
+*/
