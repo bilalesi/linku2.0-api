@@ -1,6 +1,6 @@
 module.exports = {
   server: {
-    hostname: process.env.HOSTNAME,
+    origin: process.env.ORIGIN,
     port: process.env.PORT,
     secret: process.env.SECRET
   },

@@ -1,12 +1,26 @@
 const fs = require('fs');
-const { ApolloServer, gql } = require('apollo-server');
+const express = require('express');
+const cors = require('cors');
+const { ApolloServer, gql } = require('apollo-server-express');
+const { UI } = require('bull-board');
+
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 
-const database = require('./services/database');
 const models = require('./models');
 
+const database = require('./services/database');
 database.connect();
+
+const config = require('./config');
+const { origin } = config.server;
+
+const app = express();
+
+app.use(cors({
+  origin,
+}));
+
 
 const Query = require('./resolvers/queries');
 const Mutation = require('./resolvers/mutations');
@@ -43,12 +57,15 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req, res }) => ({
-    authToken: req.headers['x-access-token'] || req.headers.authorization,
+  context: ({ res }) => ({
     models,
     res
   }),
   playground: true
 });
 
-module.exports = server;
+server.applyMiddleware({ app });
+
+app.use('/queues', UI);
+
+module.exports = app;

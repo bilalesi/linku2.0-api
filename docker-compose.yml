@@ -8,7 +8,7 @@ services:
       - .:/usr/src/app
     environment:
       NODE_ENV: development
-      HOSTNAME: 0.0.0.0
+      ORIGIN: http://localhost:4000
       PORT: 4000
       SECRET: E8D94B8BE8AE1
       SCRAPER_BASE_URL: https://guayacan.uninorte.edu.co/4PL1CACI0N35/registro

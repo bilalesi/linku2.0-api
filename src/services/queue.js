@@ -1,6 +1,7 @@
 const Queue = require('bull');
 const { redis } = require('../config');
 const { setQueues } = require('bull-board');
+const { Group } = require('../models');
 
 const { getAllDepartments, getGroupsByDepartment } = require('./scraper');
 
@@ -18,9 +19,16 @@ for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
 /**
  *
  */
-updateDepartmentGroupsQueue.process(async job => {
-  const { name, code } = job.data;
+updateDepartmentGroupsQueue.process(async (job) => {
+  const { code } = job.data;
   const groups = await getGroupsByDepartment(code);
+
+  job.progress(50);
+
+  await Promise.all(groups.map(async(group) => {
+    console.log('group', group);
+    return Group.create(group);
+  }));
 
   job.progress(100);
 });
