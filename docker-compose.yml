@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  api:
+    build: .
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    environment:
+      NODE_ENV: development
+      HOSTNAME: 0.0.0.0
+      PORT: 4000
+      SECRET: E8D94B8BE8AE1
+      DATABASE_URL: mongodb://linku_user:root_12345@db:27017/linku
+    depends_on:
+      - db
+  db:
+    image: mongo
+    volumes:
+      - mongo-data:/data
+      # - ./db/dump:/dump
+      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: linku_user
+      MONGO_INITDB_ROOT_PASSWORD: root_12345
+      MONGO_INITDB_DATABASE: linku
+    ports:
+      - 27017:27017
+
+volumes:
+  mongo-data: ~
