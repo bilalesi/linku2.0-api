@@ -53,4 +53,5 @@ module.exports = {
   resultadoNRC1,
   resultadoDepartamento1,
   resultadoCodigo1
+  // TODO resultado_curso1
 };
