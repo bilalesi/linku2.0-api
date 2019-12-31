@@ -4,10 +4,10 @@ const { redis } = require('../config');
 const updateDatabaseQueue = new Queue('update database queue', redis.url);
 
 const { DEPARTMENTS, getGroupsByDepartment } = require('../services/scraper');
-const { Group } = require('../models')
+const { Group } = require('../models');
 
 /**
- * Update database 
+ * Update database
  */
 updateDatabaseQueue.process(async (job) => {
   await Promise.all(DEPARTMENTS.map(async ({ id }) => {
