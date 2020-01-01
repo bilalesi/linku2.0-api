@@ -1,8 +1,9 @@
 # Linku 2.0 api
+
 > GraphQL API to get schedules from Universidad del Norte
 
-
 ## How to run?
+
 ### Server
 
 ```shell
@@ -10,16 +11,20 @@
 ```
 
 ## Want to help?
+
 Want to file a bug, contribute some code, or improve documentation? Excellent! Create a pr :D
 
 ## Bull dashboard
+
 Information about the status of groups and departments scraping queues
 [Link](https://linku2-api.herokuapp.com/queues)
 
 ## Get groups
+
 `GET` [Playground](https://linku2-api.herokuapp.com/graphql)
-`POST`  https://linku2-api.herokuapp.com/graphql
-* By nrc or subject name
+`POST` https://linku2-api.herokuapp.com/graphql
+
+- By nrc or subject name
 
 ```shell
   query getGroups(
@@ -63,59 +68,61 @@ Information about the status of groups and departments scraping queues
 ## Schema
 
 ```shell
-  scalar Date
+scalar Date
 
-  type Query {
-    getGroups(name: String, nrc: String): [Group!]!
-  }
+type Query {
+  getGroups(name: String): [Group!]!
+  getGroup(nrc: String!) : Group
+}
 
-  type Mutation {
-    updateDatabase: Boolean!
-  }
+type Mutation {
+  updateDatabase: Boolean!
+}
 
-  type Group {
-    id: ID!
-    nrc: String!
-    group: String!
-    subject: Subject!
-    professors: [Professor!]!
-    schedule: [Schedule!]!
-    quota: Quota!
-  }
+type Group {
+  id: ID!
+  nrc: String!
+  group: String!
+  subject: Subject!
+  professors: [Professor!]!
+  schedule: [Schedule!]!
+  quota: Quota!
+}
 
-  type Subject {
-    id: ID!
-    name: String!
-    departmentName: String!
-    code: String!
-    number: String!
-  }
+type Subject {
+  id: ID!
+  name: String!
+  departmentName: String!
+  code: String!
+  number: String!
+}
 
-  type Professor {
-    name: String!
-    lastname: String!
-  }
+type Professor {
+  firstname: String!
+  lastname: String!
+}
 
-  type Schedule {
-    startDate: String!
-    endDate: String!
-    time: Time!
-    place: String!
-    day: String!
-  }
+type Schedule {
+  startDate: String!
+  endDate: String!
+  time: Time!
+  place: String!
+  day: String!
+}
 
-  type Time {
-    start: String!
-    end: String!
-  }
+type Time {
+  start: String!
+  end: String!
+}
 
-  type Quota {
-    taken: Float!
-    free: Float!
-  }
+type Quota {
+  taken: Float!
+  free: Float!
+}
 ```
 
 ## <a name="contributors"></a> Contributors
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/krthr"><img src="https://avatars.githubusercontent.com/u/18665740?s=400&v=4" width="100px;" alt="Wilson Tovar"/><br /><sub><b>Wilson Tovar</b></sub></a></td>
