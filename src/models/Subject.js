@@ -7,7 +7,8 @@ const subjectSchema = new Schema(
     name: String,
     departmentName: String,
     code: String,
-    number: String
+    number: String,
+    mat: String
   },
   {
     timestamps: true
@@ -22,6 +23,16 @@ subjectSchema.methods.getId = function getId() {
   // eslint-disable-next-line no-underscore-dangle
   return doc._id.toString();
 };
+
+subjectSchema.pre('save', next => {
+  this.mat = `${this.code}${this.number}`;
+  next();
+});
+
+subjectSchema.pre('update', next => {
+  this.mat = `${this.code}${this.number}`;
+  next();
+});
 
 const Subject = mongoose.model('Subject', subjectSchema);
 

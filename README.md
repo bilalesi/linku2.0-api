@@ -95,6 +95,7 @@ type Subject {
   departmentName: String!
   code: String!
   number: String!
+  mat: String!
 }
 
 type Professor {
