@@ -1,4 +1,6 @@
-const getGroups = async (parent, { name, nrc }, context) => {
+const { server } = require('../../config');
+
+const getGroups = async (parent, { name, page }, context) => {
   let query = {};
 
   if (name) {
@@ -14,7 +16,28 @@ const getGroups = async (parent, { name, nrc }, context) => {
     };
   }
 
-  return context.models.Group.find(query).populate('subject');
+  const {
+    docs,
+    totalPages,
+    limit,
+    nextPage,
+    prevPage,
+  } = await context.models.Group.find(query)
+    .populate('subject')
+    .paginate({
+      limit: server.pagination.limit,
+      page: page || server.pagination.defaultPage
+    });
+
+  return {
+    docs,
+    pageInfo: {
+      totalPages,
+      limit,
+      nextPage,
+      prevPage,
+    }
+  }
 };
 
 module.exports = getGroups;

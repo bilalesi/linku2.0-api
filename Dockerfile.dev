@@ -19,7 +19,7 @@ RUN apt-get update \
   && apt-get clean
 
 COPY ./package.json .
-COPY ./package-lock.json .
+# COPY ./package-lock.json .
 
 RUN npm install
 
