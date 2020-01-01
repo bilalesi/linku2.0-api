@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -33,6 +34,8 @@ subjectSchema.pre('update', next => {
   this.mat = `${this.code}${this.number}`;
   next();
 });
+
+subjectSchema.plugin(mongoosePaginate);
 
 const Subject = mongoose.model('Subject', subjectSchema);
 

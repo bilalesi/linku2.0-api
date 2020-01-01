@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema, SchemaTypes } = mongoose;
 
@@ -61,6 +62,8 @@ groupSchema.methods.getId = function getId() {
   // eslint-disable-next-line no-underscore-dangle
   return doc._id.toString();
 };
+
+groupSchema.plugin(mongoosePaginate);
 
 const Group = mongoose.model('Group', groupSchema);
 
