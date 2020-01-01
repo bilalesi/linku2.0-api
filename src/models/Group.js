@@ -20,7 +20,7 @@ const groupSchema = new Schema(
 
     professors: [
       {
-        name: String,
+        firstname: String,
         lastname: String
       }
     ],

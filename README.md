@@ -88,7 +88,7 @@ Information about the status of groups and departments scraping queues
   }
 
   type Professor {
-    name: String
+    firstname: String
     lastname: String
   }
 
@@ -97,6 +97,7 @@ Information about the status of groups and departments scraping queues
     endDate: String
     time: Time
     place: String
+    day: String
   }
 
   type Time {

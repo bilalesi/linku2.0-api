@@ -145,10 +145,20 @@ async function getGroupByNRC(
       .match(/>([^<>]|^>)*</gm)
       .slice(1)
       .map(elem => {
-        const name = elem.replace(/>\s*|\s*</g, '').split(',');
+        let [firstname, lastname] = elem
+          .replace(/>\s*|\s*</g, '')
+          .toLowerCase()
+          .split(',');
+
+        firstname = firstname.trim();
+        lastname = lastname.trim();
+
+        firstname = `${firstname[0].toUpperCase()}${firstname.slice(1)}`;
+        lastname = `${lastname[0].toUpperCase()}${lastname.slice(1)}`;
+
         return {
-          firstname: name[1].trim(),
-          lastname: name[0].trim()
+          firstname,
+          lastname
         };
       }),
 

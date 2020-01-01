@@ -1,25 +1,23 @@
 const getGroups = async (parent, { name, nrc }, context) => {
+  let query = {};
+
   if (name) {
     const subject = await context.models.Subject.find({
       $text: { $search: name }
-    })
-  
-    const groups = await context.models.Group.find({
-      subject,
-    }).populate('subject');
-  
-    return groups;
+    });
+
+    query = {
+      subject
+    };
   }
 
   if (nrc) {
-    const groups = await context.models.Group.find({
-      nrc,
-    }).populate('subject');
-
-    return groups;
+    query = {
+      nrc
+    };
   }
 
-  return context.models.Group.find();
+  return context.models.Group.find(query).populate('subject');
 };
 
 module.exports = getGroups;
