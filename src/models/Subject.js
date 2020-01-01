@@ -9,7 +9,10 @@ const subjectSchema = new Schema(
     departmentName: String,
     code: String,
     number: String,
-    mat: String
+    mat: {
+      type: String,
+      unique: true
+    }
   },
   {
     timestamps: true
@@ -24,16 +27,6 @@ subjectSchema.methods.getId = function getId() {
   // eslint-disable-next-line no-underscore-dangle
   return doc._id.toString();
 };
-
-subjectSchema.pre('save', next => {
-  this.mat = `${this.code}${this.number}`;
-  next();
-});
-
-subjectSchema.pre('update', next => {
-  this.mat = `${this.code}${this.number}`;
-  next();
-});
 
 subjectSchema.plugin(mongoosePaginate);
 
