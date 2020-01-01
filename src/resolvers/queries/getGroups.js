@@ -14,12 +14,6 @@ const getGroups = async (parent, { name, nrc }, context) => {
     };
   }
 
-  if (nrc) {
-    query = {
-      nrc
-    };
-  }
-
   return context.models.Group.find(query).populate('subject');
 };
 
