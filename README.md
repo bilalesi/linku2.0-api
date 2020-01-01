@@ -45,6 +45,7 @@ Information about the status of groups and departments scraping queues
           start
           end
         }
+        day
         place
       }
       professors {
@@ -73,41 +74,44 @@ Information about the status of groups and departments scraping queues
   }
 
   type Group {
-    nrc: String
-    subject: Subject
+    id: ID!
+    nrc: String!
+    group: String!
+    subject: Subject!
     professors: [Professor!]!
     schedule: [Schedule!]!
-    quota: Quota
+    quota: Quota!
   }
 
   type Subject {
-    name: String
-    departmentName: String
-    code: String
-    number: String
+    id: ID!
+    name: String!
+    departmentName: String!
+    code: String!
+    number: String!
   }
 
   type Professor {
-    firstname: String
-    lastname: String
+    name: String!
+    lastname: String!
   }
 
   type Schedule {
-    startDate: String
-    endDate: String
-    time: Time
-    place: String
-    day: String
+    startDate: String!
+    endDate: String!
+    time: Time!
+    place: String!
+    day: String!
   }
 
   type Time {
-    start: String
-    end: String
+    start: String!
+    end: String!
   }
 
   type Quota {
-    taken: Float
-    free: Float
+    taken: Float!
+    free: Float!
   }
 ```
 
