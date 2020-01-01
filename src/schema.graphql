@@ -25,7 +25,7 @@ type Subject {
 }
 
 type Professor {
-  name: String
+  firstname: String
   lastname: String
 }
 

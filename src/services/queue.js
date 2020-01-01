@@ -20,6 +20,7 @@ for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
  * Get and update information of a group.
  */
 getGroupQueue.process(async job => {
+  /** @type {import('../types').Group} */
   const group = job.data;
 
   const { code, number } = group.subject;
