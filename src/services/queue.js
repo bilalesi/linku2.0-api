@@ -80,7 +80,9 @@ getDepartamentsQueue.process(2, async job => {
   const departments = await getAllDepartments();
 
   departments.map((department, i) => {
-    getDepartmentGroupsQueue.add(department);
+    getDepartmentGroupsQueue.add(department, {
+      attempts: 5
+    });
     job.progress(((i + 1) / departments.length) * 100);
   });
 });

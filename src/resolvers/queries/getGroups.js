@@ -3,17 +3,14 @@ const getGroups = async (parent, { name, nrc }, context) => {
 
   if (name) {
     const subject = await context.models.Subject.find({
-      $text: { $search: name }
+      name: {
+        $regex: name,
+        $options: 'i'
+      }
     });
 
     query = {
       subject
-    };
-  }
-
-  if (nrc) {
-    query = {
-      nrc
     };
   }
 

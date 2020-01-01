@@ -1,7 +1,8 @@
 scalar Date
 
 type Query {
-  getGroups(name: String, nrc: String): [Group!]!
+  getGroups(name: String): [Group!]!
+  getGroup(nrc: String!) : Group
 }
 
 type Mutation {
@@ -9,40 +10,42 @@ type Mutation {
 }
 
 type Group {
-  nrc: String
-  group: String
-  subject: Subject
+  id: ID!
+  nrc: String!
+  group: String!
+  subject: Subject!
   professors: [Professor!]!
   schedule: [Schedule!]!
-  quota: Quota
+  quota: Quota!
 }
 
 type Subject {
-  name: String
-  departmentName: String
-  code: String
-  number: String
+  id: ID!
+  name: String!
+  departmentName: String!
+  code: String!
+  number: String!
 }
 
 type Professor {
-  firstname: String
-  lastname: String
+  firstname: String!
+  lastname: String!
 }
 
 type Schedule {
-  startDate: String
-  endDate: String
-  time: Time
-  place: String
-  day: String
+  startDate: String!
+  endDate: String!
+  time: Time!
+  place: String!
+  day: String!
 }
 
 type Time {
-  start: String
-  end: String
+  start: String!
+  end: String!
 }
 
 type Quota {
-  taken: Float
-  free: Float
+  taken: Float!
+  free: Float!
 }

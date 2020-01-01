@@ -12,16 +12,9 @@ const models = require('./models');
 const database = require('./services/database');
 database.connect();
 
-const config = require('./config');
-const { origin } = config.server;
-
 const app = express();
 
-app.use(
-  cors({
-    origin
-  })
-);
+app.use(cors());
 
 app.use('/queues', UI);
 

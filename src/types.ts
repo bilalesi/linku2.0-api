@@ -21,7 +21,7 @@ export type Subject = {
 };
 
 export type Professor = {
-  name: String;
+  firstname: String;
   lastname: String;
 };
 
