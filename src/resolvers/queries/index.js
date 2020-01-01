@@ -7,5 +7,5 @@ module.exports = {
   getGroups,
   getGroup,
   getSubjects,
-  getSubjectsGroups,
+  getSubjectsGroups
 };

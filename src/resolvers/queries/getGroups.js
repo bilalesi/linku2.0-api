@@ -22,12 +22,11 @@ const getGroups = async (parent, { name, page }, context) => {
     limit,
     nextPage,
     prevPage,
-  } = await context.models.Group.find(query)
-    .populate('subject')
-    .paginate({
-      limit: server.pagination.limit,
-      page: page || server.pagination.defaultPage
-    });
+  } = await context.models.Group.paginate(query, {
+    limit: server.pagination.limit,
+    page: page || server.pagination.defaultPage,
+    populate: 'subject'
+  });
 
   return {
     docs,
