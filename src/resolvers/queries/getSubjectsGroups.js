@@ -1,20 +1,12 @@
+const mongoose = require('mongoose');
 const { server } = require('../../config');
 
-const getGroups = async (parent, { name, page }, context) => {
-  let query = {};
-
-  if (name) {
-    const subject = await context.models.Subject.find({
-      name: {
-        $regex: name,
-        $options: 'i'
-      }
-    });
-
-    query = {
-      subject
-    };
-  }
+const getSubjectsGroups = async (parent, { subjectsIds, page }, context) => {
+  const query = {
+    subject: {
+      $in: subjectsIds.map((id) => mongoose.Types.ObjectId(id))
+    },
+  };
 
   const {
     docs,
@@ -39,4 +31,4 @@ const getGroups = async (parent, { name, page }, context) => {
   }
 };
 
-module.exports = getGroups;
+module.exports = getSubjectsGroups;

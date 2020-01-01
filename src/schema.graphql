@@ -1,8 +1,10 @@
 scalar Date
 
 type Query {
-  getGroups(name: String): [Group!]!
+  getGroups(name: String, page: Float): [Group!]!
   getGroup(nrc: String!) : Group
+  getSubjects(search: String, page: Float): Subjects!
+  getSubjectsGroups(subjectsIds: [ID!]!, page: Float) : Groups!
 }
 
 type Mutation {
@@ -25,6 +27,7 @@ type Subject {
   departmentName: String!
   code: String!
   number: String!
+  mat: String!
 }
 
 type Professor {
@@ -48,4 +51,21 @@ type Time {
 type Quota {
   taken: Float!
   free: Float!
+}
+
+type Subjects {
+  docs: [Subject!]!
+  pageInfo: PageInfo!
+}
+
+type Groups {
+  docs: [Group!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  totalPages: Float!
+  limit: Float!
+  nextPage: Float
+  prevPage: Float
 }

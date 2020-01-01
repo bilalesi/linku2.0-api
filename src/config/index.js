@@ -2,7 +2,11 @@ module.exports = {
   server: {
     origin: process.env.ORIGIN,
     port: process.env.PORT,
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    pagination: {
+      limit: 10,
+      defaultPage: 1,
+    }
   },
 
   database: {

@@ -124,7 +124,7 @@ async function getGroupByNRC(
     return null;
   }
 
-  const subject = {
+  let subject = {
     name: $('body > div > p.msg1').text(),
     departmentName: ($('body > div > p:nth-child(2)').text() || '')
       .replace('Departamento:', '')
@@ -137,6 +137,11 @@ async function getGroupByNRC(
       .split(':')[1]
       .substring(4)
       .trim()
+  };
+
+  subject = {
+    ...subject,
+    mat: `${subject.code}${subject.number}`
   };
 
   const [professors, [taken, free]] = await Promise.all([
@@ -278,6 +283,7 @@ async function getGroupsBySubjectCode(
         .slice(5)
     )
     .get();
+
   return getGroupsByNRCs(NRCs);
 }
 
