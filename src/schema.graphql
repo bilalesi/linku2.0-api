@@ -3,8 +3,8 @@ scalar Date
 type Query {
   getGroups(name: String, page: Float): [Group!]!
   getGroup(nrc: String!) : Group
-  getSubjects(name: String, page: Float): Subjects
-  getSubjectsGroups(subjectsIds: [ID!]!, page: Float) : Groups
+  getSubjects(search: String, page: Float): Subjects!
+  getSubjectsGroups(subjectsIds: [ID!]!, page: Float) : Groups!
 }
 
 type Mutation {

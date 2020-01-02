@@ -3,12 +3,22 @@ const { server } = require('../../config');
 const getSubjects = async (parent, { search, page }, context) => {
   let query = {};
 
-  if (name) {
+  if (search) {
     query = {
-      name: {
-        $regex: search,
-        $options: 'i'
-      },
+      $or: [
+        {
+          name: {
+            $regex: search,
+            $options: 'i'
+          },
+        },
+        {
+          mat: {
+            $regex: search,
+            $options: 'i'
+          },
+        },
+      ]
     };
   }
 

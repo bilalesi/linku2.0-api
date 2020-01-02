@@ -2,9 +2,10 @@
 
 > GraphQL API to get schedules from Universidad del Norte
 
-## How to run?
+* `GET` [Playground](https://linku2-api.herokuapp.com/graphql)
+* `POST` https://linku2-api.herokuapp.com/graphql
 
-### Server
+## How to run?
 
 ```shell
   docker-compose up
@@ -17,109 +18,29 @@ Want to file a bug, contribute some code, or improve documentation? Excellent! C
 ## Bull dashboard
 
 Information about the status of groups and departments scraping queues
-[Link](https://linku2-api.herokuapp.com/queues)
+[https://linku2-api.herokuapp.com/queues](https://linku2-api.herokuapp.com/queues)
 
-## Get groups
-
-`GET` [Playground](https://linku2-api.herokuapp.com/graphql)
-`POST` https://linku2-api.herokuapp.com/graphql
-
-- By nrc or subject name
+## Get subjects example
 
 ```shell
-  query getGroups(
-    $nrc: String
-    $name: String
-  ) {
-    getGroups(
-      nrc: $nrc
-      name: $name
-    ) {
-    	nrc
-      group
-      subject {
+  {
+    getSubjects {
+      docs {
+        id
         name
         departmentName
         code
         number
+        mat
       }
-      schedule {
-        startDate
-        endDate
-        time {
-          start
-          end
-        }
-        day
-        place
-      }
-      professors {
-        name
-        lastname
-      }
-      quota {
-        taken
-        free
+      pageInfo {
+        totalPages
+        limit
+        nextPage
+        prevPage
       }
     }
   }
-```
-
-## Schema
-
-```shell
-scalar Date
-
-type Query {
-  getGroups(name: String): [Group!]!
-  getGroup(nrc: String!) : Group
-}
-
-type Mutation {
-  updateDatabase: Boolean!
-}
-
-type Group {
-  id: ID!
-  nrc: String!
-  group: String!
-  subject: Subject!
-  professors: [Professor!]!
-  schedule: [Schedule!]!
-  quota: Quota!
-}
-
-type Subject {
-  id: ID!
-  name: String!
-  departmentName: String!
-  code: String!
-  number: String!
-  mat: String!
-}
-
-type Professor {
-  firstname: String!
-  lastname: String!
-}
-
-type Schedule {
-  startDate: String!
-  endDate: String!
-  time: Time!
-  place: String!
-  day: String!
-}
-
-type Time {
-  start: String!
-  end: String!
-}
-
-type Quota {
-  taken: Float!
-  free: Float!
-}
 ```
 
 ## <a name="contributors"></a> Contributors
