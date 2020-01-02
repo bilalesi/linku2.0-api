@@ -2,9 +2,9 @@ scalar Date
 
 type Query {
   getGroups(name: String, page: Float): [Group!]!
-  getGroup(nrc: String!) : Group
+  getGroup(nrc: String!): Group
   getSubjects(search: String, page: Float): Subjects!
-  getSubjectGroups(subjectId: ID!) : [Group!]!
+  getSubjectGroups(subjectId: ID!): [Group!]!
   getServerStatus: ServerStatus!
 }
 
@@ -17,7 +17,7 @@ type Group {
   nrc: String!
   group: String!
   subject: Subject!
-  professors: [Professor!]!
+  professors: [String!]!
   schedule: [Schedule!]!
   quota: Quota!
 }
@@ -31,16 +31,11 @@ type Subject {
   mat: String!
 }
 
-type Professor {
-  firstname: String!
-  lastname: String!
-}
-
 type Schedule {
   startDate: String!
   endDate: String!
-  time: Time!
   place: String!
+  time: Time!
   day: String!
 }
 

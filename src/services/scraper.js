@@ -155,16 +155,24 @@ async function getGroupByNRC(
           .toLowerCase()
           .split(',');
 
-        firstname = firstname.trim();
-        lastname = lastname.trim();
+        firstname = firstname
+          .trim()
+          .split(' ')
+          .map((word, i) => {
+            return `${word[0].toUpperCase()}${word.slice(1)}`;
+          })
+          .join(' ');
 
-        firstname = `${firstname[0].toUpperCase()}${firstname.slice(1)}`;
-        lastname = `${lastname[0].toUpperCase()}${lastname.slice(1)}`;
+        lastname = lastname
+          .trim()
+          .split(' ')
+          .map(word => {
+            word = word.trim();
+            return `${word[0].toUpperCase()}${word.slice(1)}`;
+          })
+          .join(' ');
 
-        return {
-          firstname,
-          lastname
-        };
+        return `${firstname} ${lastname}`;
       }),
 
     $('body > div > p:nth-child(4)')
@@ -191,10 +199,7 @@ async function getGroupByNRC(
         startDate,
         endDate,
         day,
-        time: {
-          start,
-          end
-        },
+        time: { start, end },
         place
       };
     })

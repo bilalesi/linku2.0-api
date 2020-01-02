@@ -10,14 +10,14 @@ const getSubjects = async (parent, { search, page }, context) => {
           name: {
             $regex: search,
             $options: 'i'
-          },
+          }
         },
         {
           mat: {
             $regex: search,
             $options: 'i'
-          },
-        },
+          }
+        }
       ]
     };
   }
@@ -27,7 +27,7 @@ const getSubjects = async (parent, { search, page }, context) => {
     totalPages,
     limit,
     nextPage,
-    prevPage,
+    prevPage
   } = await context.models.Subject.paginate(query, {
     limit: server.pagination.limit,
     page: page || server.pagination.defaultPage
@@ -39,9 +39,9 @@ const getSubjects = async (parent, { search, page }, context) => {
       totalPages,
       limit,
       nextPage,
-      prevPage,
+      prevPage
     }
-  }
+  };
 };
 
 module.exports = getSubjects;

@@ -4,7 +4,11 @@ const { getDepartamentsQueue } = require('../../services/queue');
 const updateDatabase = async (parent, args, context) => {
   const cron = await context.models.Cron.findOne();
 
-  if (cron && Date.now() - cron.lastCall.getTime() < 24 * 60 * 60 * 1000) {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    cron &&
+    Date.now() - cron.lastCall.getTime() < 24 * 60 * 60 * 1000
+  ) {
     throw new ApolloError('Can be executed once per day', 400);
   }
 
