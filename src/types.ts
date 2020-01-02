@@ -21,17 +21,17 @@ export type Subject = {
   mat: String;
 };
 
-type Time = {
-  start: String;
-  end: String;
-};
-
 type Schedule = {
   startDate: String;
   endDate: String;
-  time: Time;
   place: String;
   day: String;
+  time: Time;
+};
+
+type Time = {
+  start: String;
+  end: String;
 };
 
 type Quota = {

@@ -25,12 +25,12 @@ const groupSchema = new Schema(
       {
         startDate: String,
         endDate: String,
+        place: String,
+        day: String,
         time: {
           start: String,
           end: String
-        },
-        place: String,
-        day: String
+        }
       }
     ],
 
