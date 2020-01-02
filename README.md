@@ -7,8 +7,6 @@
 
 ## How to run?
 
-### Server
-
 ```shell
   docker-compose up
 ```
@@ -20,7 +18,7 @@ Want to file a bug, contribute some code, or improve documentation? Excellent! C
 ## Bull dashboard
 
 Information about the status of groups and departments scraping queues
-[Link](https://linku2-api.herokuapp.com/queues)
+[https://linku2-api.herokuapp.com/queues](https://linku2-api.herokuapp.com/queues)
 
 ## Get subjects example
 
