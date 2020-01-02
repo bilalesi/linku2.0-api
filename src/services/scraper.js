@@ -161,10 +161,7 @@ async function getGroupByNRC(
         firstname = `${firstname[0].toUpperCase()}${firstname.slice(1)}`;
         lastname = `${lastname[0].toUpperCase()}${lastname.slice(1)}`;
 
-        return {
-          firstname,
-          lastname
-        };
+        return `${firstname} ${lastname}`;
       }),
 
     $('body > div > p:nth-child(4)')

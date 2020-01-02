@@ -19,12 +19,7 @@ const groupSchema = new Schema(
       require: true
     },
 
-    professors: [
-      {
-        firstname: String,
-        lastname: String
-      }
-    ],
+    professors: [String],
 
     schedule: [
       {

@@ -18,11 +18,7 @@ export type Subject = {
   departmentName: String;
   code: String;
   number: String;
-};
-
-export type Professor = {
-  firstname: String;
-  lastname: String;
+  mat: String;
 };
 
 type Time = {
@@ -46,7 +42,7 @@ type Quota = {
 export type Group = {
   nrc: String;
   subject: Subject;
-  professors: Professor[];
+  professors: String[];
   schedule: Schedule[];
   quota: Quota;
 };
