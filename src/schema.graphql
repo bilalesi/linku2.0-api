@@ -4,7 +4,8 @@ type Query {
   getGroups(name: String, page: Float): [Group!]!
   getGroup(nrc: String!): Group
   getSubjects(search: String, page: Float): Subjects!
-  getSubjectsGroups(subjectsIds: [ID!]!, page: Float): Groups!
+  getSubjectGroups(subjectId: ID!): [Group!]!
+  getServerStatus: ServerStatus!
 }
 
 type Mutation {
@@ -53,14 +54,15 @@ type Subjects {
   pageInfo: PageInfo!
 }
 
-type Groups {
-  docs: [Group!]!
-  pageInfo: PageInfo!
-}
-
 type PageInfo {
   totalPages: Float!
   limit: Float!
   nextPage: Float
   prevPage: Float
+}
+
+type ServerStatus {
+  updatedAt: Date
+  totalGroups: Float
+  totalSubjects: Float
 }
