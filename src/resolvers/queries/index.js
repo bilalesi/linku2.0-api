@@ -1,11 +1,13 @@
 const getGroups = require('./getGroups');
 const getGroup = require('./getGroup');
 const getSubjects = require('./getSubjects');
-const getSubjectsGroups = require('./getSubjectsGroups');
+const getSubjectGroups = require('./getSubjectGroups');
+const getServerStatus = require('./getServerStatus');
 
 module.exports = {
   getGroups,
   getGroup,
   getSubjects,
-  getSubjectsGroups
+  getSubjectGroups,
+  getServerStatus
 };

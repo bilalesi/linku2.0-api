@@ -4,7 +4,7 @@ module.exports = {
     port: process.env.PORT,
     secret: process.env.SECRET,
     pagination: {
-      limit: 10,
+      limit: 15,
       defaultPage: 1,
     }
   },

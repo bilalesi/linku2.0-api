@@ -3,7 +3,7 @@ const { server } = require('../../config');
 const getSubjects = async (parent, { search, page }, context) => {
   let query = {};
 
-  if (search) {
+  if (search && search.length > 0) {
     query = {
       $or: [
         {

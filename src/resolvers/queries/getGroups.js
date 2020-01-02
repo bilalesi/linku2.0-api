@@ -3,7 +3,7 @@ const { server } = require('../../config');
 const getGroups = async (parent, { name, page }, context) => {
   let query = {};
 
-  if (name) {
+  if (name && name.length > 0) {
     const subject = await context.models.Subject.find({
       name: {
         $regex: name,
