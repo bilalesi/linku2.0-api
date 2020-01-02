@@ -57,7 +57,8 @@ const server = new ApolloServer({
     models,
     res
   }),
-  playground: true
+  playground: true,
+  introspection: true
 });
 
 server.applyMiddleware({ app });
