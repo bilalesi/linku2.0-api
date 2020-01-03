@@ -156,21 +156,25 @@ async function getGroupByNRC(
           .split(',');
 
         firstname = firstname
-          .trim()
-          .split(' ')
-          .map((word, i) => {
-            return `${word[0].toUpperCase()}${word.slice(1)}`;
-          })
-          .join(' ');
+          ? firstname
+              .trim()
+              .split(' ')
+              .map((word, i) => {
+                return `${word[0].toUpperCase()}${word.slice(1)}`;
+              })
+              .join(' ')
+          : '';
 
         lastname = lastname
-          .trim()
-          .split(' ')
-          .map(word => {
-            word = word.trim();
-            return `${word[0].toUpperCase()}${word.slice(1)}`;
-          })
-          .join(' ');
+          ? lastname
+              .trim()
+              .split(' ')
+              .map(word => {
+                word = word.trim();
+                return `${word[0].toUpperCase()}${word.slice(1)}`;
+              })
+              .join(' ')
+          : '';
 
         return `${firstname} ${lastname}`;
       }),
