@@ -7,9 +7,9 @@ const updateDatabase = async (parent, args, context) => {
   if (
     process.env.NODE_ENV === 'production' &&
     cron &&
-    Date.now() - cron.lastCall.getTime() < 24 * 60 * 60 * 1000
+    Date.now() - cron.lastCall.getTime() < 15 * 60 * 1000
   ) {
-    throw new ApolloError('Can be executed once per day', 400);
+    throw new ApolloError('Can be executed once per 15 mins', 400);
   }
 
   getDepartamentsQueue.add({});

@@ -125,7 +125,7 @@ async function getGroupByNRC(
   }
 
   let subject = {
-    name: $('body > div > p.msg1').text().replace('?', 'ñ'),
+    name: $('body > div > p.msg1').text().replace('?', 'Ñ'),
     departmentName: ($('body > div > p:nth-child(2)').text().replace('?', 'ñ') || '')
       .replace('Departamento:', '')
       .trim(),
