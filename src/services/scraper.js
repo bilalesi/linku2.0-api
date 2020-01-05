@@ -125,8 +125,8 @@ async function getGroupByNRC(
   }
 
   let subject = {
-    name: $('body > div > p.msg1').text(),
-    departmentName: ($('body > div > p:nth-child(2)').text() || '')
+    name: $('body > div > p.msg1').text().replace('?', 'ñ'),
+    departmentName: ($('body > div > p:nth-child(2)').text().replace('?', 'ñ') || '')
       .replace('Departamento:', '')
       .trim(),
     code: subjectInfo[0]
@@ -152,28 +152,30 @@ async function getGroupByNRC(
       .map(elem => {
         let [firstname, lastname] = elem
           .replace(/>\s*|\s*</g, '')
+          .replace('?', 'ñ')
           .toLowerCase()
           .split(',');
 
         firstname = firstname
           ? firstname
-              .trim()
-              .split(' ')
-              .map((word, i) => {
-                return `${word[0].toUpperCase()}${word.slice(1)}`;
-              })
-              .join(' ')
+            .trim()
+            .split(' ')
+            .map((word, i) => {
+              if (!word.length) return '';
+              return `${word[0].toUpperCase()}${word.slice(1)}`;
+            })
+            .join(' ')
           : '';
 
         lastname = lastname
           ? lastname
-              .trim()
-              .split(' ')
-              .map(word => {
-                word = word.trim();
-                return `${word[0].toUpperCase()}${word.slice(1)}`;
-              })
-              .join(' ')
+            .trim()
+            .split(' ')
+            .map(word => {
+              if (!word.length) return '';
+              return `${word[0].toUpperCase()}${word.slice(1)}`;
+            })
+            .join(' ')
           : '';
 
         return `${firstname} ${lastname}`;

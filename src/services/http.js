@@ -36,7 +36,7 @@ async function resultadoNRC1({ nrc, datos_periodo, datos_nivel }) {
     method: 'POST',
     data: parseParams({ nrc, datos_periodo, datos_nivel }),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
   }).then(res => res.data);
 }
@@ -57,7 +57,7 @@ async function resultadoDepartamento1({
     method: 'POST',
     data: parseParams({ departamento, datos_periodo, datos_nivel }),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
   }).then(res => res.data);
 }
@@ -74,7 +74,7 @@ async function resultadoCodigo1({ mat, datos_periodo, datos_nivel }) {
     method: 'POST',
     data: parseParams({ mat, datos_periodo, datos_nivel }),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     }
   }).then(res => res.data);
 }
