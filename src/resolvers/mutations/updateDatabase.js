@@ -1,5 +1,5 @@
 const { ApolloError } = require('apollo-server');
-const { getDepartamentsQueue } = require('../../services/queue');
+const { initQueues } = require('../../services/queue');
 
 const updateDatabase = async (parent, args, context) => {
   const cron = await context.models.Cron.findOne();
@@ -12,19 +12,7 @@ const updateDatabase = async (parent, args, context) => {
     throw new ApolloError('Can be executed once per 15 mins', 400);
   }
 
-  getDepartamentsQueue.add({});
-
-  await context.models.Cron.findOneAndUpdate(
-    {},
-    {
-      lastCall: new Date()
-    },
-    {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    }
-  );
+  initQueues();
 
   return true;
 };

@@ -9,11 +9,13 @@ const getGroupQueue = new Queue('groups', redis.url);
 const getDepartmentGroupsQueue = new Queue('get departments groups', redis.url);
 const getDepartamentsQueue = new Queue('get departments', redis.url);
 
-// Clean all the jobs in both queues
-for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
-  getGroupQueue.clean(100, status);
-  getDepartmentGroupsQueue.clean(100, status);
-  getDepartamentsQueue.clean(100, status);
+const initQueues = () => {
+  for (const status of ['active', 'completed', 'delayed', 'failed', 'wait']) {
+    getGroupQueue.clean(100, status);
+    getDepartmentGroupsQueue.clean(100, status);
+    getDepartamentsQueue.clean(100, status);
+  }
+  getDepartamentsQueue.add({});
 }
 
 /**
@@ -73,6 +75,20 @@ getDepartmentGroupsQueue.process(async job => {
   });
 });
 
+getDepartmentGroupsQueue.on('global:completed', async () => {
+  await Cron.findOneAndUpdate(
+    {},
+    {
+      lastCall: new Date()
+    },
+    {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    }
+  );
+});
+
 /**
  * Create jobs for every department.
  */
@@ -92,5 +108,6 @@ setQueues([getGroupQueue, getDepartmentGroupsQueue, getDepartamentsQueue]);
 module.exports = {
   getGroupQueue,
   getDepartmentGroupsQueue,
-  getDepartamentsQueue
+  getDepartamentsQueue,
+  initQueues,
 };
