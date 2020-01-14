@@ -1,7 +1,7 @@
 const Queue = require('bull');
 const { redis } = require('../config');
 const { setQueues } = require('bull-board');
-const { Group, Subject } = require('../models');
+const { Cron, Group, Subject } = require('../models');
 
 const { getAllDepartments, getGroupsByDepartment } = require('./scraper');
 
